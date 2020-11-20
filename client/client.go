@@ -24,6 +24,8 @@ func main() {
 		fmt.Println(string(msg))
 		wg.Done()
 	}(&wg)
-	c.WriteMessage(websocket.TextMessage, []byte("TEST!!"))
+	if err = c.WriteMessage(websocket.TextMessage, []byte("TEST!!")); err != nil {
+		fmt.Println(err)
+	}
 	wg.Wait()
 }
