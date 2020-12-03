@@ -41,11 +41,11 @@ func cliControl(c *gin.Context) {
 	}()
 	go func(w *websocket.Conn) {
 		_, msg, err := ws.ReadMessage()
-		fmt.Println(strconv.Itoa(counter)+". client: ", string(msg))
 		if err != nil {
 			log.Println(err)
 			return
 		}
+		fmt.Println(strconv.Itoa(counter)+". client: ", string(msg))
 		counter++
 	}(ws)
 	go func(w *websocket.Conn) {
@@ -87,11 +87,11 @@ func echo(c *gin.Context) {
 	for {
 		counter++
 		_, msg, err = ws.ReadMessage()
-		fmt.Println(strconv.Itoa(counter)+". client: ", string(msg))
 		if err != nil {
 			log.Println(err)
 			return
 		}
+		fmt.Println(strconv.Itoa(counter)+". client: ", string(msg))
 		msg = []byte(strconv.Itoa(counter) + ". server: " + string(msg))
 		if err := ws.WriteMessage(websocket.TextMessage, msg); err != nil {
 			log.Println(err)
