@@ -10,7 +10,7 @@ import (
 
 func main() {
 	var wg sync.WaitGroup
-	c, _, err := websocket.DefaultDialer.Dial("ws://server.cirlab:8000/echo", nil)
+	c, _, err := websocket.DefaultDialer.Dial("ws://127.0.0.1:8080/echo", nil)
 	if err != nil {
 		log.Fatal("dial:", err)
 	}
@@ -29,7 +29,7 @@ func main() {
 	}
 	wg.Wait()
 
-	c, _, err = websocket.DefaultDialer.Dial("ws://server.cirlab:8000/cli", nil)
+	c, _, err = websocket.DefaultDialer.Dial("ws://127.0.0.1:8080/cli", nil)
 	if err != nil {
 		log.Fatal("dial:", err)
 	}
