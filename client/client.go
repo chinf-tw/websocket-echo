@@ -28,4 +28,16 @@ func main() {
 		fmt.Println(err)
 	}
 	wg.Wait()
+
+	c, _, err = websocket.DefaultDialer.Dial("ws://127.0.0.1:8080/cli", nil)
+	if err != nil {
+		log.Fatal("dial:", err)
+	}
+	for {
+		_, msg, err := c.ReadMessage()
+		if err != nil {
+			log.Fatal("** client websocket ** ", err)
+		}
+		fmt.Println(string(msg))
+	}
 }
