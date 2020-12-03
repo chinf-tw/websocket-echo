@@ -85,7 +85,6 @@ func echo(c *gin.Context) {
 	}()
 	var msg []byte
 	for {
-		counter++
 		_, msg, err = ws.ReadMessage()
 		if err != nil {
 			log.Println(err)
@@ -97,5 +96,6 @@ func echo(c *gin.Context) {
 			log.Println(err)
 			return
 		}
+		counter++
 	}
 }
