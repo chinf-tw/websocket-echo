@@ -41,7 +41,7 @@ func cliControl(c *gin.Context) {
 	}()
 	go func(w *websocket.Conn) {
 		_, msg, err := ws.ReadMessage()
-		fmt.Println(strconv.Itoa(counter)+"client: ", string(msg))
+		fmt.Println(strconv.Itoa(counter)+". client: ", string(msg))
 		if err != nil {
 			log.Println(err)
 			return
