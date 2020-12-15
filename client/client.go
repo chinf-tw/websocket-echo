@@ -9,8 +9,15 @@ import (
 )
 
 func main() {
+
+	var (
+		port = 8000
+		addr = "127.0.0.1"
+		c    *websocket.Conn
+		err  error
+	)
 	var wg sync.WaitGroup
-	c, _, err := websocket.DefaultDialer.Dial("ws://127.0.0.1:8080/echo", nil)
+	c, _, err = websocket.DefaultDialer.Dial(fmt.Sprintf("ws://%s:%d/echo", addr, port), nil)
 	if err != nil {
 		log.Fatal("dial:", err)
 	}
@@ -29,7 +36,7 @@ func main() {
 	}
 	wg.Wait()
 
-	c, _, err = websocket.DefaultDialer.Dial("ws://127.0.0.1:8080/cli", nil)
+	c, _, err = websocket.DefaultDialer.Dial(fmt.Sprintf("ws://%s:%d/cli", addr, port), nil)
 	if err != nil {
 		log.Fatal("dial:", err)
 	}
