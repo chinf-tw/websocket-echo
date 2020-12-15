@@ -77,6 +77,7 @@ func echo(c *gin.Context) {
 		log.Println("upgrade:", err)
 		return
 	}
+	fmt.Println("ws is connected")
 	defer func() {
 		log.Println("disconnect !!")
 		if err = ws.Close(); err != nil {
