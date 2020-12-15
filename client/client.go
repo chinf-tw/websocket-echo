@@ -11,7 +11,7 @@ import (
 func main() {
 
 	var (
-		port = 8000
+		port = 8080
 		addr = "127.0.0.1"
 		c    *websocket.Conn
 		err  error
@@ -45,6 +45,9 @@ func main() {
 		if err != nil {
 			log.Fatal("** client websocket ** ", err)
 		}
-		fmt.Println(string(msg))
+		fmt.Println("get: ", string(msg))
+		c.WriteMessage(websocket.TextMessage, msg)
+		fmt.Println("send : ", string(msg))
+		fmt.Println()
 	}
 }

@@ -21,7 +21,6 @@ func main() {
 }
 
 func cliControl(c *gin.Context) {
-	command := make(chan []byte)
 
 	upgrade := &websocket.Upgrader{
 		//如果有 cross domain 的需求，可加入這個，不檢查 cross domain
@@ -46,15 +45,8 @@ func cliControl(c *gin.Context) {
 			log.Println(err)
 			return
 		}
-		fmt.Println(strconv.Itoa(counter)+". client: ", string(msg))
+		fmt.Printf("\n%d. client: %s\n", counter, string(msg))
 		counter++
-	}(ws)
-	go func(w *websocket.Conn) {
-		for {
-			if err := w.WriteMessage(websocket.TextMessage, <-command); err != nil {
-				log.Fatal("** websocket ** ", err)
-			}
-		}
 	}(ws)
 	for {
 		var cmd string
@@ -63,8 +55,10 @@ func cliControl(c *gin.Context) {
 		if _, err := fmt.Scan(&cmd); err != nil {
 			log.Fatal("** command **", err)
 		}
-		fmt.Println("start", string(cmd), "end")
-		command <- []byte(cmd)
+		fmt.Println("cmd send: ", string(cmd))
+		if err := ws.WriteMessage(websocket.TextMessage, []byte(cmd)); err != nil {
+			log.Fatal("** websocket ** ", err)
+		}
 	}
 }
 func echo(c *gin.Context) {
